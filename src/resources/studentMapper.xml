@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace属性是名称空间，必须唯一 -->
+<mapper namespace="Student">
+
+    <!-- resultMap标签:映射实体与表
+         type属性：表示实体全路径名
+         id属性：为实体与表的映射取一个任意的唯一的名字
+    -->
+    <resultMap type="main.com.zhiwenwu.entity.Student" id="studentMap"> <!-- type属性：表示实体全路径名 type="main.com.zhiwenwu.entity.Student" 一定要指向路径上的类，一开始是用type=“student”,加载失败-->
+        <!-- id标签:映射主键属性
+             result标签：映射非主键属性
+             property属性:实体的属性名
+             column属性：表的字段名
+        -->
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sal" column="sal"/>
+    </resultMap>
+    <insert id="insert" parameterType="main.com.zhiwenwu.entity.Student" >
+        INSERT INTO zhi.students (ID, NAME, SAL) VALUES (#{id},#{name},#{sal});
+    </insert>
+
+    <select id="findID" parameterType="int" resultType="main.com.zhiwenwu.entity.Student">
+        SELECT * FROM STUDENTS WHERE id = #{id};
+    </select>
+
+    <select id="findAll" resultMap="studentMap">
+		SELECT * FROM STUDENTS;
+	</select>
+
+    <delete id="deleteByID" parameterType="int">
+        DELETE FROM STUDENTS where id = #{id};
+    </delete>
+
+    <update id="update" parameterType="main.com.zhiwenwu.entity.Student">
+
+		update students set name=#{name},sal=#{sal} where id=#{id};
+
+	</update>
+
+
+</mapper>
+
+
